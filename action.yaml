@@ -1,25 +1,25 @@
 name: 'upload-docker'
-desctiption: 'docker build and push'
+description: >
+  Simplified the process of building and uploading docker images.
+  Created for personal repository work and CI/CD support.
 
 inputs:
-  distro:
-    desctiption: 'Docker image distro'
+  context:
+    description: 'Dockerfile path'
     required: true
-  path:
-    desctiption: 'Dockerfile path'
+  repository:
+    description: 'Docker hub repository'
+    required: true
+  release:
+    description: 'Release version number.'
     required: true
   username:
-    desctiption: 'Docker hub ID'
+    description: 'Docker hub ID'
     required: true
   password:
-    desctiption: 'Docker hub PASSWORD'
+    description: 'Docker hub PASSWORD'
     required: true
-  repo:
-    desctiption: 'Docker hub repository'
-    required: true
-  release: # release is optional. default: "v".
-    desctiption: 'Release version number. "v" is already included.'
-
+ 
 runs:
   using: 'composite'
   steps:
@@ -38,7 +38,11 @@ runs:
     - name: 'Build and push'
       uses: docker/build-push-action@v4
       with:
-        context: '{{defaultContext}}:${{ inputs.path }}'
+        context: '{{defaultContext}}:${{ inputs.context }}'
         file: Dockerfile
         push: true
-        tags: ${{ inputs.username }}/${{ inputs.repo }}:${{ inputs.distro }}-v${{ inputs.release }}
+        tags: ${{ inputs.username }}/${{ inputs.repository }}:${{ inputs.release }}
+
+branding:
+  icon: 'arrow-up-circle'
+  color: 'blue'

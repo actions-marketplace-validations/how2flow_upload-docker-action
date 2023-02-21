@@ -20,12 +20,11 @@ jobs:
       - name: 'Docker upload'
         uses: how2flow/upload-docker-action@{ref}
         with:
-          distro: ***
-          path: *** # Dockerfile's path.
+          context: ***
+          repository: ***
+          release: ***
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repo: ***
-          release: ***
 
 ...
 
